@@ -69,7 +69,7 @@ def edit_blog(request,blog_id):
     else:
         form=blogform(instance=blog)
         
-    return render(request,'add_blog.html'{'form':form})
+    return render(request,'add_blog.html',{'form':form})
 
 def delete_blog(request,blog_id):
     blog=get_object_or_404(Blogs,pk=blog_id,user=request.user)
