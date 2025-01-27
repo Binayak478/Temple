@@ -24,7 +24,7 @@ class Committee(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
-
+    
     def __str__(self):
         return self.name
 
@@ -50,7 +50,6 @@ class Content(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
     content_type = models.CharField(max_length=50)
-    created_at = models.DateTimeField(auto_now_add=True)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
 
@@ -130,15 +129,20 @@ class Event(models.Model):
     id=models.AutoField(primary_key=True)
     title=models.CharField(max_length=255)
     event_date=models.DateTimeField()
-    images=models.ImageField(upload_to='event_images/')
     description=models.TextField()
-    content_id=models.ForeignKey(Content,on_delete=models.CASCADE,db_column='content_db')
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.content_id.id
+        return self.name
+    
+class EventImage(models.Model):
+    event = models.ForeignKey(Event, related_name="images", on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='events/images/')
+
+    def __str__(self):
+        return f"Image for {self.event.title}"
     
 class Notice(models.Model):
     id=models.AutoField(primary_key=True)

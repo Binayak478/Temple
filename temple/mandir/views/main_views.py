@@ -1,36 +1,42 @@
 from django.shortcuts import render,redirect,get_object_or_404 
-from ..models import Event,Blogs
-from ..forms import eventform,blogform
+from ..models import Event,Blogs,Committee,CommitteeMember,EventImage
+from ..forms import EventForm,blogform,committeeform,memberform
+from django.contrib.auth.decorators import login_required
 
+
+@login_required
 def add_event(request):
-    if request.method=='POST':
-       form=eventform(request.POST,request.FILES)
-       if form.is_valid():
-           event=form.save(commit=False)
-           event.user=request.user
-           event.save()
-           return redirect("event_list")
+    if request.method == "POST":
+        form = EventForm(request.POST, request.FILES)
+        if form.is_valid():
+            event = form.save(commit=False)
+            event.user = request.user
+            event.save()
+
+            for image in request.FILES.getlist('images'):
+                EventImage.objects.create(event=event, image=image)
+
+            return redirect('event_list')
     else:
-        form=eventform()
-    
-    return render(request,'add_event.html',{'form':form})
+        form = EventForm()
+    return render(request, 'main/add_event.html', {'form': form})
 
 def event_list(request):
     event=Event.objects.all().order_by('-created_at')
-    return render(request,'event_list.html',{'event':event})
+    return render(request,'main/event_list.html',{'event':event})
 
 def edit_event(request,event_id):
     event=get_object_or_404(Event,pk=event_id,user=request.user)
     if request.method=='POST':
-        form=eventform(request.POST,request.FILES,instance=event)
+        form=EventForm(request.POST,request.FILES,instance=event)
         if form.is_valid():
             event=form.save(commit=False)
             event.user=request.user
             event.save()
             return redirect('event_list')
     else:
-        form=eventform(instance=event)
-    return render(request,'add_event.html',{'from':form})
+        form=EventForm(instance=event)
+    return render(request,'main/edit_event.html',{'from':form})
 
 def delete_event(request,event_id):
     event=get_object_or_404(Event,pk=event_id,user=request.user)
@@ -77,3 +83,22 @@ def delete_blog(request,blog_id):
         blog.delete()
         return redirect("list_blog")
     return render(request,'delete_blog.html',{'blog':blog})
+
+def list_committee(request):
+    form=Committee.objects.all().order_by('-created_at')
+    return render(request,'main/list_committee.html',{'form':form})
+
+
+def add_committee(request):
+    pass
+
+
+def edit_committee(request):
+    pass
+
+def delete_committee(request):
+    pass
+
+def list_member(request):
+    form=CommitteeMember.objects.all().order_by("-c_id")
+    return render(request,"main/list_member.html",{'form':form})

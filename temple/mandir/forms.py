@@ -1,12 +1,38 @@
-from django.forms import forms
-from .models import Event,Committee,Blogs
+from django import forms
+from .models import Event,Committee,Blogs,CommitteeMember,Notice,mission_vision,AddDonor,EventImage
+from django.contrib.auth.models import User
 
-class eventform(froms.ModelForm):
-    class meta:
-        model=Event
-        fields=["title","event_date","images","description"]
+# class LoginForm(forms.ModelForm):
+#     class Meta:
+#         model=User
+#         fields=["username","password"]
+
+
+class EventForm(forms.ModelForm):
+    class Meta:
+        model = Event
+        fields = ['title', 'event_date', 'description']
+
+    images = forms.FileField(widget=forms.ClearableFileInput(attrs={'allow_multiple_selected': True}), required=False)
+
+    
+class EventImageForm(forms.ModelForm):
+    class Meta:
+        model = EventImage
+        fields = ['image']
+        
 
 class blogform(forms.ModelForm):
-    class meta:
-        model=Blogs
-        files=["title","subtitle","description","image"]
+    class Meta:
+        models=Blogs
+        fields="__all__"
+        
+class committeeform(forms.ModelForm):
+    class Meta:
+        model= Committee
+        fields="__all__"
+        
+class memberform(forms.ModelForm):
+    class Meta:
+        model=CommitteeMember
+        fields="__all__"

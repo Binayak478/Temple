@@ -14,40 +14,43 @@
 
     <div class="bg-white border rounded-lg px-8 py-6 mx-auto my-8 max-w-2xl">
         <h2 class="text-2xl font-medium mb-4">Add Event</h2>
-        <form method="POST" action="adddonor" enctype="multipart/form-data">
+        <form method="POST" action="{% url 'add_event' %}" enctype="multipart/form-data">
             {% csrf_token %}
             <!-- Title Input -->
             <div class="mb-4">
-                <label for="Title" class="block text-gray-700 font-medium mb-2">Title</label>
+                <label for="title" class="block text-gray-700 font-medium mb-2">Title</label>
                 <input type="text" id="title" name="title"
                     class="border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400" required>
             </div>
-
+        
             <!-- Event Date Input -->
             <div class="mb-4">
                 <label for="event_date" class="block text-gray-700 font-medium mb-2">Event Date</label>
                 <input type="date" id="event_date" name="event_date"
                     class="border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400" required>
             </div>
-
+        
             <!-- Image Upload -->
             <div class="mb-4">
-                <label for="image" class="block text-gray-700 font-medium mb-2">Upload Image</label>
-                <input type="file" id="image" name="image"
+                <label for="images" class="block text-gray-700 font-medium mb-2">Upload Images</label>
+                <input type="file" id="images" name="images" multiple
                     class="w-full text-gray-500 font-medium text-sm bg-gray-100 file:cursor-pointer cursor-pointer file:border-0 file:py-2 file:px-4 file:mr-4 file:bg-gray-800 file:hover:bg-gray-700 file:text-white rounded" />
             </div>
-
+        
             <!-- Description Input -->
             <div class="mb-4">
                 <label for="description" class="block text-gray-700 font-medium mb-2">Event Description</label>
-                <textare name="description" id="text" cols="30" rows="10" class="mb-10 h-40 w-full resize-none rounded-md border border-slate-300 p-5 font-semibold text-gray-300" />
+                <textarea name="description" id="description" cols="30" rows="10"
+                    class="mb-10 h-40 w-full resize-none rounded-md border border-slate-300 p-5 font-semibold text-gray-300"></textarea>
             </div>
-
+        
             <!-- Submit Button -->
             <div class="text-center">
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Submit</button>
             </div>
         </form>
+        
+        
     </div>
 </body>
 
