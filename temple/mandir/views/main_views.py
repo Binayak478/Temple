@@ -13,7 +13,7 @@ def add_event(request):
             event.user = request.user
             event.save()
 
-            for image in request.FILES.getlist('images'):
+            for image in request.FILES.getlist('images'):#save garna
                 EventImage.objects.create(event=event, image=image)
 
             return redirect('event_list')
@@ -88,9 +88,18 @@ def list_committee(request):
     form=Committee.objects.all().order_by('-created_at')
     return render(request,'main/list_committee.html',{'form':form})
 
-
+@login_required
 def add_committee(request):
-    pass
+    if request.method=='POST':
+        form=committeeform(request.POST)
+        if form.is_valid():
+            committee=form.save(commit=False)
+            committee.user=request.user
+            committee.save()
+            return redirect('add_committee')
+    else:
+        form=committeeform()
+    return render(request,'main/add_committee.html',{'form':form})
 
 
 def edit_committee(request):

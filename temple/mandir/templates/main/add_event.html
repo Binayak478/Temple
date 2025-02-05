@@ -1,16 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Event</title>
-    {% load static %}
-    <link href="{% static 'src/styles.css' %}" rel="stylesheet" />
-</head>
-
-<body>
-    {% include '../components/_navbar.html' %}
+{% extends 'components/_navbar.html' %}
+{% block content %}
 
     <div class="bg-white border rounded-lg px-8 py-6 mx-auto my-8 max-w-2xl">
         <h2 class="text-2xl font-medium mb-4">Add Event</h2>
@@ -52,6 +41,4 @@
         
         
     </div>
-</body>
-
-</html>
+{% endblock %}

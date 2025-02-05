@@ -30,7 +30,7 @@ class blogform(forms.ModelForm):
 class committeeform(forms.ModelForm):
     class Meta:
         model= Committee
-        fields="__all__"
+        fields=['name','start_date','end_date','is_current']
         
 class memberform(forms.ModelForm):
     class Meta:

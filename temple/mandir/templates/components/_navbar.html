@@ -1,3 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Event</title>
+    {% load static %}
+    <link href="{% static 'src/styles.css' %}" rel="stylesheet" />
+</head>
+
+<body>
 <header class="py-4 px-4 sm:px-10 bg-white z-50 relative">
     <div class='max-w-7xl w-full mx-auto flex flex-wrap items-center gap-4'>
       <a href="javascript:void(0)"><img src="https://readymadeui.com/readymadeui.svg" alt="logo" class='w-40' />
@@ -100,3 +112,9 @@
         </button>
       </div>
   </header>
+{% block content %}
+
+{% endblock %}
+</body>
+
+</html>
