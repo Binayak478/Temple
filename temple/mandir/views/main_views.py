@@ -105,9 +105,22 @@ def add_committee(request):
 def edit_committee(request):
     pass
 
-def delete_committee(request):
+def delete_committee(request,c_id):
     pass
 
 def list_member(request):
     form=CommitteeMember.objects.all().order_by("-c_id")
     return render(request,"main/list_member.html",{'form':form})
+
+@login_required
+def add_member(request):
+    if request.method=='POST':
+        form=memberform(request.POST,request.FILES)
+        if form.is_valid():
+            member=form.save(commit=False)
+            member.user=request.user
+            member.save()
+            return redirect('add_member')
+    else:
+        form=memberform()
+    return render(request,"main/add_member.html",{'form':form})

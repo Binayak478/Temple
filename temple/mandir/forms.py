@@ -32,7 +32,15 @@ class committeeform(forms.ModelForm):
         model= Committee
         fields=['name','start_date','end_date','is_current']
         
+        
+
+        
 class memberform(forms.ModelForm):
+    c_id = forms.ModelChoiceField(
+        queryset=Committee.objects.all(),
+        empty_label="Select Committee",
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
     class Meta:
         model=CommitteeMember
-        fields="__all__"
+        fields=['name', 'address', 'position', 'image', 'c_id', 'user']
